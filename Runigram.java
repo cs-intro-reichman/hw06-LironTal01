@@ -206,6 +206,10 @@ public class Runigram {
 	public static Color[][] blend(Color[][] image1, Color[][] image2, double alpha) {
 		Color[][] newImage = new Color[image1.length][image1[0].length];
 
+		if (image1.length != image2.length || image1[0].length != image2[0].length) {
+			image2 = scaled(image2, image1[0].length, image1.length);
+		}
+
 		for (int i = 0; i < image1.length; i++) {
 			for (int j = 0; j < image1[0].length; j++) {
 
@@ -224,15 +228,25 @@ public class Runigram {
 	public static void morph(Color[][] source, Color[][] target, int n) {
 		double alpha = 0;
 
-		Color[][] image2 = new Color[source.length][source[0].length];
-		Color[][] newImage = new Color[source.length][source[0].length];
-		image2 = scaled(target, source.length, source[0].length);
-		for (int i = 0; i < n; i++) {
-			alpha = (double) (n - i) / n;
+		if (source.length != target.length || source[0].length != target[0].length) {
+			Color[][] newImage = new Color[source.length][source[0].length];
+			newImage = scaled(target, source.length, source[0].length);
 
-			newImage = blend(source, image2, alpha);
-			Runigram.display(newImage);
-			StdDraw.pause(i);
+			for (int i = 0; i <= n; i++) {
+				alpha = (n - i) / n;
+				Color[][] result = new Color[source.length][source[0].length];
+				result = blend(source, newImage, alpha);
+				Runigram.display(result);
+				StdDraw.pause(500);
+			}
+		} else {
+			for (int i = 0; i <= n; i++) {
+				alpha = (n - i) / n;
+				Color[][] result = new Color[source.length][source[0].length];
+				result = blend(source, target, alpha);
+				Runigram.display(result);
+				StdDraw.pause(500);
+			}
 		}
 	}
 
