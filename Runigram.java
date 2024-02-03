@@ -77,6 +77,7 @@ public class Runigram {
         private static void print(Color[][] image) {
                 for (int i = 0; i < image.length; i++) {
                         for (int j = 0; j < image[0].length; j++) {
+                                // #feedback - no need to create a new variable here, it can done be in one line - print(image[i][j]).
                                 Color c = image[i][j];
                                 print(c);
                         }
@@ -89,13 +90,14 @@ public class Runigram {
          * image.
          */
         public static Color[][] flippedHorizontally(Color[][] image) {
-                Color[][] Newimage = new Color[image.length][image[0].length];
+                Color[][] Newimage = new Color[image.length][image[0].length]; // #feedback - variable name should be newImage.
 
                 for (int i = 0; i < Newimage.length; i++) {
                         int m = image[0].length;
 
                         for (int j = 0; j < Newimage[0].length; j++) {
                                 m--;
+                                // #feedback - you can avoid using m by using image[0].length - 1 - j.
                                 Newimage[i][j] = image[i][m];
 
                         }
@@ -206,6 +208,7 @@ public class Runigram {
         public static Color[][] blend(Color[][] image1, Color[][] image2, double alpha) {
                 Color[][] newImage = new Color[image1.length][image1[0].length];
 
+                // #feedback - no need to scale in this function, see the function documentation.
                 image2 = scaled(image2, image1[0].length, image1.length);
 
                 for (int i = 0; i < image1.length; i++) {
